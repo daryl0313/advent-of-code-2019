@@ -1,7 +1,7 @@
 import { input } from "./day1.input";
 
 // Part 1
-// export async function getAnswer() {
+// export function getAnswer() {
 //   return input.reduce((acc, cur) => {
 //     let fuel = Math.floor(cur / 3) - 2;
 //     return acc + fuel;
@@ -9,7 +9,7 @@ import { input } from "./day1.input";
 // }
 
 // Part 2
-export async function getAnswer() {
+export function getAnswer() {
   return input.reduce((acc, cur) => {
     let fuel = getFuelConsumtion(cur);
     return acc + fuel;

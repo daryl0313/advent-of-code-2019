@@ -16,7 +16,7 @@ function getOperation(intCode: number): IntOperation {
 }
 
 // Part 1
-export async function getAnswer() {
+export function getAnswer() {
   // const input = "1,1,1,4,99,5,6,0,99";
   const inputs = input.split(",").map(i => +i);
 
@@ -41,7 +41,7 @@ export async function getAnswer() {
       inputs[writeIndex] = inputs[input1Index] * inputs[input2Index];
     }
   } while (i);
-  return inputs;
+  return inputs[0];
 }
 
 // Part 2

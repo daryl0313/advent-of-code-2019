@@ -1,7 +1,7 @@
 // Import stylesheets
 import "./style.css";
 
-import { getAnswer } from "./src/day1/day1";
+import { getAnswer } from "./src/day1";
 
 async function writeAnswer() {
   // Write TypeScript code!

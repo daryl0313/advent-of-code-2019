@@ -15,33 +15,47 @@ function getOperation(intCode: number): IntOperation {
   }
 }
 
-// Part 1
-export function getAnswer() {
-  // const input = "1,1,1,4,99,5,6,0,99";
+function getOutput(noun: number, verb: number) {
   const inputs = input.split(",").map(i => +i);
+  inputs[1] = noun;
+  inputs[2] = verb;
 
-  inputs[1] = 12;
-  inputs[2] = 2;
-
-  let i = 0;
+  let pointer = 0;
   do {
-    const operation = getOperation(inputs[i]);
+    const operation = getOperation(inputs[pointer]);
     if (operation === "END") {
-      i = null;
+      pointer = null;
       break;
     }
-    const input1Index = inputs[i + 1];
-    const input2Index = inputs[i + 2];
-    const writeIndex = inputs[i + 3];
-    i += 4;
+    const parameter1Index = inputs[pointer + 1];
+    const parameter2Index = inputs[pointer + 2];
+    const writeIndex = inputs[pointer + 3];
+    pointer += 4;
 
     if (operation === "add") {
-      inputs[writeIndex] = inputs[input1Index] + inputs[input2Index];
+      inputs[writeIndex] = inputs[parameter1Index] + inputs[parameter2Index];
     } else {
-      inputs[writeIndex] = inputs[input1Index] * inputs[input2Index];
+      inputs[writeIndex] = inputs[parameter1Index] * inputs[parameter2Index];
     }
-  } while (i);
+  } while (pointer);
   return inputs[0];
 }
 
+// Part 1
+// export function getAnswer() {
+//   const inputs = input.split(",").map(i => +i);
+//   return getOutput(12, 2);
+// }
+
 // Part 2
+export function getAnswer() {
+  for (let noun = 0; noun < 100; noun++) {
+    for (let verb = noun + 1; verb < 100; verb++) {
+      const output = getOutput(noun, verb);
+      if (output === 19690720) {
+        return 100 * noun + verb;
+      }
+    }
+  }
+  throw new Error('Failed to find inputs');
+}

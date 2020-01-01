@@ -39,37 +39,49 @@ function getNextCoordinates(coordinates: Coordinates, direction: Direction): Coo
     }
 }
 
-// part1
 export function getAnswer() {
-    const graph: { [x: number]: { [y: number]: true } } = {};
-    let currentCoordinates: Coordinates = { x: 0, y: 0 };
+    let currentStep = 0;
 
+    const graph: { [x: number]: { [y: number]: number } } = {};
+    let currentCoordinates: Coordinates = { x: 0, y: 0 };
     input.wire1.forEach(instruction => {
         const dir = getDirection(instruction);
         const length = getInstructionLength(instruction);
 
         for (let i = 1; i <= length; i++) {
+            currentStep += 1;
             currentCoordinates = getNextCoordinates(currentCoordinates, dir);
-            graph[currentCoordinates.x] = { ...graph[currentCoordinates.x], [currentCoordinates.y]: true };
+            graph[currentCoordinates.x] = { ...graph[currentCoordinates.x], [currentCoordinates.y]: currentStep };
         }
     });
 
+    currentStep = 0;
     currentCoordinates = { x: 0, y: 0 };
+
+    // This is used for part 1
     const intersectDistances: number[] = [];
+
+    // This is used for part 2
+    const steps: number[] = [];
+
     input.wire2.forEach(instruction => {
         const dir = getDirection(instruction);
         const length = getInstructionLength(instruction);
 
         for (let i = 1; i <= length; i++) {
+            currentStep += 1;
             currentCoordinates = getNextCoordinates(currentCoordinates, dir);
-            if (graph[currentCoordinates.x]?.[currentCoordinates.y] ?? false) {
+            const wire1Steps = graph[currentCoordinates.x]?.[currentCoordinates.y];
+            if (wire1Steps) {
                 intersectDistances.push(Math.abs(currentCoordinates.x) + Math.abs(currentCoordinates.y));
+                steps.push(wire1Steps + currentStep);
             }
         }
     });
 
+    // part1 answer
+    // return Math.min(...intersectDistances);
 
-    return Math.min(...intersectDistances);
+    // part2 answer
+    return Math.min(...steps);
 }
-
-// part2
